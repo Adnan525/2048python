@@ -1,14 +1,25 @@
 import random
 
 #return 1 EMPTY, RANDOM positions to put a value
+
+# def getPosition(grid):
+#     result = dict()
+#     result["row"] = random.randint(0,3)
+#     result["column"] = random.randint(0,3)
+#     if grid[result["row"]][result["column"]]==0:
+#         return result
+#     else:
+#         return getPosition(grid)
 def getPosition(grid):
-    result = dict()
-    result["row"] = random.randint(0,3)
-    result["column"] = random.randint(0,3)
-    if grid[result["row"]][result["column"]]==0:
-        return result
-    else:
-        return getPosition(grid)
+    possibleVacancies = []
+    for i in range(0,4):
+        for j in range(0,4):
+            if(grid[i][j] == 0):
+                result = dict()
+                result["row"] = i
+                result["column"] = j
+                possibleVacancies.append(result)
+    return possibleVacancies[random.randint(0, len(possibleVacancies)-1)]
 
 def insertValue(grid):
     startPosition = getPosition(grid)
@@ -94,15 +105,26 @@ def transpose(grid):
 def keepPlaying(grid):
     for row in grid:
         if 2048 in row:
+            print("Well done you've won the game")
             return False
-    return True
+        if 0 in row:
+            return True
+    # all filled and no 2048
+    print("Game lost")
+    return False
 
 if __name__ == '__main__':
+    # grid = [
+    #     [1024,0,0,0],
+    #     [1024,0,0,0],
+    #     [0,0,0,0],
+    #     [0,0,0,0]
+    # ]
     grid = [
-        [0,0,0,0],
-        [0,0,0,0],
-        [0,0,0,0],
-        [0,0,0,0]
+        [2,2,2,0],
+        [4,4,4,0],
+        [8,8,8,8],
+        [16,16,16,0]
     ]
     display(grid)
     startGame(grid)
